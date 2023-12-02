@@ -32,45 +32,24 @@ public class part2 {
     }
 
     private static String getNumber(String line) {
-        List<Integer> digitIndexes = new ArrayList<>();
+        Map<Integer, Integer> digits = new HashMap<>();
 
         for (String numberWord : NUMBER_WORDS) {
             if (line.contains(numberWord)) {
-                digitIndexes.add(line.indexOf(numberWord));
-                digitIndexes.add(line.lastIndexOf(numberWord));
+                digits.put(line.indexOf(numberWord), WORD_TO_INT.get(numberWord));
+                digits.put(line.lastIndexOf(numberWord), WORD_TO_INT.get(numberWord));
             }
         }
 
         String[] characters = line.split("");
         for (int i = 0; i < line.length(); i++) {
             if (NUMBER_REGEX.matcher(characters[i]).matches()) {
-                digitIndexes.add(i);
+                digits.put(i, Integer.parseInt(characters[i]));
             }
         }
 
-        digitIndexes.sort(Integer::compareTo);
+        List<Integer> indexes = digits.keySet().stream().sorted().toList();
 
-        int firstDigit = getDigitFromString(characters, digitIndexes.get(0));
-        int lastDigit = getDigitFromString(characters, digitIndexes.get(digitIndexes.size() - 1));
-
-        return firstDigit + "" + lastDigit;
-    }
-
-    private static int getDigitFromString(String[] characters, int digitStartIndex) {
-        if (NUMBER_REGEX.matcher(characters[digitStartIndex]).matches()) {
-            return Integer.parseInt(characters[digitStartIndex]);
-        } else {
-            String numberWord = "";
-
-            for (int i = digitStartIndex; i <= characters.length; i++) {
-                if (NUMBER_WORDS.contains(numberWord)) {
-                    return WORD_TO_INT.get(numberWord);
-                }
-
-                numberWord += characters[i];
-            }
-        }
-
-        return -1;
+        return digits.get(indexes.get(0)) + "" + digits.get(indexes.get(indexes.size() - 1));
     }
 }
