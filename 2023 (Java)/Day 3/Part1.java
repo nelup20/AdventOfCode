@@ -18,20 +18,20 @@ public class Part1 {
             }
 
             int rowMax = input.size();
-            int colMax = input.get(0).size();
+            int columnMax = input.get(0).size();
 
             for (int row = 0; row < rowMax; row++) {
                 String currentNumber = "";
                 boolean currentNumberIsValid = false;
 
-                for (int col = 0; col < colMax; col++) {
-                    String currentCharacter = input.get(row).get(col);
+                for (int column = 0; column < columnMax; column++) {
+                    String currentCharacter = input.get(row).get(column);
 
                     if (NUMBER_REGEX.matcher(currentCharacter).matches()) {
                         currentNumber += currentCharacter;
 
-                        if (isAdjacentToSymbol(input, row, col)) currentNumberIsValid = true;
-                        if (col == colMax - 1 && currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
+                        if (isAdjacentToSymbol(input, row, column)) currentNumberIsValid = true;
+                        if (column == columnMax - 1 && currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
                     } else {
                         if (currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
 
@@ -46,22 +46,12 @@ public class Part1 {
     }
 
     private static boolean isAdjacentToSymbol(List<List<String>> input, int row, int col) {
-        int positionsChecked = 0;
-        int relativeRow = -1;
-        int relativeCol = -1;
-
-        while (positionsChecked <= 8) {
-            try {
-                if (SYMBOL_REGEX.matcher(input.get(row + relativeRow).get(col + relativeCol)).matches()) return true;
-            } catch (IndexOutOfBoundsException ignored) {
-            } finally {
-                positionsChecked++;
-
-                if (relativeCol >= 1) {
-                    relativeRow++;
-                    relativeCol = -1;
-                } else {
-                    relativeCol++;
+        for (int relativeRow = -1; relativeRow <= 1; relativeRow++) {
+            for (int relativeColumn = -1; relativeColumn <= 1; relativeColumn++) {
+                try {
+                    String adjacentCharacter = input.get(row + relativeRow).get(col + relativeColumn);
+                    if (SYMBOL_REGEX.matcher(adjacentCharacter).matches()) return true;
+                } catch (IndexOutOfBoundsException ignored) {
                 }
             }
         }
