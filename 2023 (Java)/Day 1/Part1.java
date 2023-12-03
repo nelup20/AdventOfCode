@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class part1 {
+public class Part1 {
     public static Pattern numberRegex = Pattern.compile("\\d");
 
     public static void main(String[] args) throws FileNotFoundException {

@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class part2 {
+public class Part2 {
     private static final Pattern NUMBER_REGEX = Pattern.compile("\\d");
     private static final List<String> NUMBER_WORDS = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
     private static final Map<String, Integer> WORD_TO_INT = Map.ofEntries(
