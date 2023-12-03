@@ -17,18 +17,21 @@ public class Part1 {
                 input.add(List.of(scanner.nextLine().split("")));
             }
 
-            for (int row = 0; row < input.size(); row++) {
+            int rowMax = input.size();
+            int colMax = input.get(0).size();
+
+            for (int row = 0; row < rowMax; row++) {
                 String currentNumber = "";
                 boolean currentNumberIsValid = false;
 
-                for (int col = 0; col < 140; col++) {
+                for (int col = 0; col < colMax; col++) {
                     String currentCharacter = input.get(row).get(col);
 
                     if (NUMBER_REGEX.matcher(currentCharacter).matches()) {
                         currentNumber += currentCharacter;
 
                         if (isAdjacentToSymbol(input, row, col)) currentNumberIsValid = true;
-                        if (col == 139 && currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
+                        if (col == colMax - 1 && currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
                     } else {
                         if (currentNumberIsValid) partNumbers.add(Integer.parseInt(currentNumber));
 
