@@ -6,8 +6,8 @@ let bundlePath = Bundle.main.path(forResource: inputDataPath, ofType: "txt")
 let inputData = try String(contentsOfFile: bundlePath!).components(separatedBy: "\n")
 
 for i in inputData.indices {
-    for j in inputData[i...].indices {
-        if (i == j || inputData[i].isEmpty || inputData[j].isEmpty) {
+    for j in inputData[(i + 1)...].indices {
+        if (inputData[i].isEmpty || inputData[j].isEmpty) {
             continue
         }
 
